@@ -1,7 +1,7 @@
 
 /*
  * Created: 27-01-2017
- * Modified: Fri 27 Jan 2017 11:59:18 GMT
+ * Modified: Fri 27 Jan 2017 14:01:35 GMT
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
@@ -14,14 +14,15 @@ using namespace irubataru;
 
 void print_help(std::string program_name)
 {
-  std::cout << program_name << " [FILE] [OPTIONS]\n"
-            << "computes the average and standard deviation of a table of "
-               "numeric values\n"
-            << "will result in an error if the array is staggered\n\n"
-            << "after the filename the number of lines to skip at the "
-               "beginning of the file,\nand the number of lines to skip between "
-               "\"measurements\" can be specified\n\n"
-            << "[OPTIONS] = [<lines to skip> = 0] [<use every n'th line> = 1]\n";
+  std::cout
+      << program_name << " [FILE] [OPTIONS]\n"
+      << "computes the average and standard deviation of a table of "
+         "numeric values\n"
+      << "will result in an error if the array is staggered\n\n"
+      << "after the filename the number of lines to skip at the "
+         "beginning of the file,\nand the number of lines to skip between "
+         "\"measurements\" can be specified\n\n"
+      << "[OPTIONS] = [<lines to skip> = 0] [<use every n'th line> = 1]\n";
 }
 
 int main(int argc, char *argv[])
@@ -30,7 +31,9 @@ int main(int argc, char *argv[])
   {
     print_help(argv[0]);
     return 1;
-  } else if (argv[1] == std::string{"-h"} or argv[1] == std::string{"--help"}) {
+  }
+  else if (argv[1] == std::string{"-h"} or argv[1] == std::string{"--help"})
+  {
     print_help(argv[0]);
     return 0;
   }
@@ -43,8 +46,6 @@ int main(int argc, char *argv[])
 
   if (argc > 3)
     read_every = boost::lexical_cast<std::size_t>(argv[3]);
-
-  std::ifstream is(argv[1], std::ifstream::in);
 
   io::TableReader<double> reader{};
   auto table = reader.Read(std::string{argv[1]}, skip_lines, read_every);
