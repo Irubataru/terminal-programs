@@ -1,11 +1,11 @@
 
 /*
  * Created: 27-01-2017
- * Modified: Fri 17 Mar 2017 18:45:39 GMT
+ * Modified: Thu 23 Mar 2017 11:48:33 GMT
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
-#include "table_mean.hpp"
+#include "stat_table.hpp"
 
 using namespace irubataru;
 
@@ -61,7 +61,7 @@ po::variables_map init_program_options(int argc, char *argv[])
     ("col", po::value<std::size_t>()->multitoken(),
      "which columns to parse, will parse all of this option is unspecified");
 
-  //clang-format on
+  // clang-format on
 
   po::options_description cmd_line_options;
   cmd_line_options.add(input_opts).add(hidden);
@@ -74,7 +74,10 @@ po::variables_map init_program_options(int argc, char *argv[])
             var_map);
 
   if (var_map.count("help") or !var_map.count("input-file")) {
-    std::cout << input_opts << std::endl;
+    std::cout << "Overview: Tool for computing various statistical properties "
+                 "of data stored in a table format.\n\n"
+              << "Usage: stat_table <options> [input file]\n\n"
+              << input_opts << std::endl;
     throw nothing_to_do_exception{};
   }
 
@@ -84,22 +87,22 @@ po::variables_map init_program_options(int argc, char *argv[])
 Table_Mean_Options parse_program_options(int argc, char *argv[])
 {
   auto var_map = init_program_options(argc, argv);
-  auto table_mean_options = Table_Mean_Options{};
+  auto stat_table_options = Table_Mean_Options{};
 
-  table_mean_options.filename = var_map["input-file"].as<std::string>();
-  table_mean_options.skip_lines = var_map["skip"].as<std::size_t>();
-  table_mean_options.read_every = var_map["delta"].as<std::size_t>();
+  stat_table_options.filename = var_map["input-file"].as<std::string>();
+  stat_table_options.skip_lines = var_map["skip"].as<std::size_t>();
+  stat_table_options.read_every = var_map["delta"].as<std::size_t>();
 
   auto comments_str = var_map["comments"].as<std::string>();
-  table_mean_options.comments =
+  stat_table_options.comments =
       std::vector<char>(comments_str.begin(), comments_str.end());
 
   if (var_map.count("human"))
-    table_mean_options.io_format = Io_Format::Human_Readable;
+    stat_table_options.io_format = Io_Format::Human_Readable;
   else
-    table_mean_options.io_format = Io_Format::Table;
+    stat_table_options.io_format = Io_Format::Table;
 
-  return table_mean_options;
+  return stat_table_options;
 }
 
 template <typename Container>

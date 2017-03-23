@@ -1,8 +1,8 @@
 CXX      ?= g++
 CXXFLAGS := -std=c++14 -Iinclude
 
-SRCS     := src/table_mean.cpp
-EXECS    := bin/table_mean
+SRCS     := src/stat_table.cpp
+EXECS    := bin/stat_table
 
 SRC_FOLDER := src
 BIN_FOLDER := bin
@@ -11,7 +11,7 @@ all: $(EXECS)
 
 .PHONY: clean all
 
-bin/table_mean : src/table_mean.cpp
+bin/stat_table : src/stat_table.cpp
 	$(CXX) $(CXXFLAGS) -lboost_program_options $< -o $@
 
 clean:
