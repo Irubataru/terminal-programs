@@ -1,7 +1,7 @@
 
 /*
  * Created: 06-02-2017
- * Modified: Mon 06 Feb 2017 12:30:36 GMT
+ * Modified: Thu 23 Mar 2017 14:10:11 GMT
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
@@ -9,8 +9,8 @@
 #define TABLE_MEAN_HPP
 
 #include <boost/program_options.hpp>
-#include <irubataru_io.hpp>
-#include <irubataru_math.hpp>
+#include <irubataru/io.hpp>
+#include <irubataru/math.hpp>
 
 #include <iostream>
 

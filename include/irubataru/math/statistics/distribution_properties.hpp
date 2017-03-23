@@ -1,12 +1,12 @@
 
 /*
  * Created: 27-01-2017
- * Modified: Fri 17 Mar 2017 19:15:25 GMT
+ * Modified: Thu 23 Mar 2017 14:08:28 GMT
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
-#ifndef IRUBATARU_MATH_HPP
-#define IRUBATARU_MATH_HPP
+#ifndef IRUBATARU_MATH_STAT_DISTRIBUTION_PROPERTIES_HPP
+#define IRUBATARU_MATH_STAT_DISTRIBUTION_PROPERTIES_HPP
 
 #include <algorithm>
 #include <iterator>
@@ -134,4 +134,4 @@ jackknife_error(Iterator begin, Iterator end)
 } // namespace math
 } // namespace irubataru
 
-#endif /* IRUBATARU_MATH_HPP */
+#endif /* IRUBATARU_MATH_STAT_DISTRIBUTION_PROPERTIES_HPP */
