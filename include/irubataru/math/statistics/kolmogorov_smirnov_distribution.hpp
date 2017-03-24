@@ -1,7 +1,7 @@
 
 /*
  * Created: 23-03-2017
- * Modified: Thu 23 Mar 2017 16:11:25 GMT
+ * Modified: Fri 24 Mar 2017 13:47:48 GMT
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
@@ -62,7 +62,7 @@ public:
       throw std::runtime_error{"In " + name() +
                                ", comp_cdf(x):\n\tx must be larger than 0"};
     else if (x == 0.)
-      return 0.;
+      return 1.;
 
     if (x < 1.18)
       return 1. - cdf(x);
