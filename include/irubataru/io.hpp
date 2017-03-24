@@ -1,7 +1,7 @@
 
 /*
  * Created: 27-01-2017
- * Modified: Fri 17 Mar 2017 18:44:02 GMT
+ * Modified: Fri 24 Mar 2017 13:21:51 GMT
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
@@ -38,8 +38,25 @@ public:
   {
   }
 
+  void set_columns(std::vector<std::size_t> cols)
+  {
+    columns = std::move(cols);
+  }
+
+  void set_comments(std::vector<std::size_t> comms)
+  {
+    comment_chars = std::move(comms);
+  }
+
+  return_type Read(std::string filename, std::vector<std::size_t> cols, std::size_t skip_lines = 0,
+                   std::size_t read_every = 1)
+  {
+    columns = cols;
+    return Read(filename, skip_lines, read_every);
+  }
+
   return_type Read(std::string filename, std::size_t skip_lines = 0,
-                   std::size_t read_every = 0)
+                   std::size_t read_every = 1)
   {
     ifs.open(filename);
     if (!ifs)
@@ -47,10 +64,15 @@ public:
                                "\" for reading."};
 
     read_preamble(skip_lines);
-    if (!ifs)
+    if (!ifs) {
+      ifs.close();
       return {};
+    }
 
-    return read_body(read_every);
+    auto result = read_body(read_every);
+
+    ifs.close();
+    return result;
   }
 
 private:
