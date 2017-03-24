@@ -16,6 +16,9 @@ all: $(EXECS)
 bin/stat_table : src/stat_table.cpp $(DEPDIR)/stat_table.d | $(BINDIR)
 	$(CXX) $(CXXFLAGS) -lboost_program_options $< -o $@
 
+bin/kolmogorov_smirnov : src/kolmogorov_smirnov.cpp $(DEPDIR)/kolmogorov_smirnov.d | $(BINDIR)
+	$(CXX) $(CXXFLAGS) -lboost_program_options $< -o $@
+
 $(DEPDIR)/%.d: $(SRCDIR)/%.cpp | $(DEPDIR)
 	@$(CXX) $(CXXFLAGS) -MM -MP -MT $(BINDIR)/$(patsubst $(SRCDIR)/%.cpp,%,$<) -MF $@ $<
 
