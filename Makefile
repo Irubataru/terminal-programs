@@ -1,21 +1,31 @@
 CXX      ?= g++
-CXXFLAGS := -std=c++14 -Iinclude
+CXXFLAGS := -std=c++14 -Iinclude -g
 
-SRCS     := src/stat_table.cpp
-EXECS    := bin/stat_table
+SRCDIR := src
+BINDIR := bin
+DEPDIR := .dep
 
-SRC_FOLDER := src
-BIN_FOLDER := bin
+SRCS     := $(wildcard $(SRCDIR)/*.cpp)
+EXECS    := $(SRCS:$(SRCDIR)/%.cpp=$(BINDIR)/%)
+DEPS     := $(SRCS:$(SRCDIR)/%.cpp=$(DEPDIR)/%.d)
 
 all: $(EXECS)
 
 .PHONY: clean all
 
-bin/stat_table : src/stat_table.cpp | $(BIN_FOLDER)
+bin/stat_table : src/stat_table.cpp $(DEPDIR)/stat_table.d | $(BINDIR)
 	$(CXX) $(CXXFLAGS) -lboost_program_options $< -o $@
 
-clean:
-	rm -f $(BIN_FOLDER)/*
+$(DEPDIR)/%.d: $(SRCDIR)/%.cpp | $(DEPDIR)
+	@$(CXX) $(CXXFLAGS) -MM -MP -MT $(BINDIR)/$(patsubst $(SRCDIR)/%.cpp,%,$<) -MF $@ $<
 
-$(BIN_FOLDER):
-	@mkdir $(BIN_FOLDER)
+-include $(DEPS)
+
+clean:
+	rm -rf $(BINDIR) $(DEPDIR)
+
+$(BINDIR):
+	@mkdir $(BINDIR)
+
+$(DEPDIR):
+	@mkdir $(DEPDIR)
