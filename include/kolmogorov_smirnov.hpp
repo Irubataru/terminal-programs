@@ -1,7 +1,7 @@
 
 /*
  * Created: 23-03-2017
- * Modified: Fri 24 Mar 2017 12:30:20 GMT
+ * Modified: Wed 05 Apr 2017 13:38:54 BST
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
@@ -28,6 +28,7 @@ struct Software_Options
   std::size_t column1;
   std::string filename2;
   std::size_t column2;
+  std::size_t bin_size;
 };
 
 po::variables_map init_program_options(int argc, char *argv[]);

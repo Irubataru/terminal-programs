@@ -1,7 +1,7 @@
 
 /*
  * Created: 23-03-2017
- * Modified: Fri 24 Mar 2017 11:41:46 GMT
+ * Modified: Wed 05 Apr 2017 13:39:41 BST
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
@@ -28,9 +28,13 @@ int main(int argc, char *argv[])
       reader.Read(options.filename1, std::vector<std::size_t>{options.column1})
           .front();
 
+  vec1 = math::statistics::bin_data(vec1, options.bin_size);
+
   auto vec2 =
       reader.Read(options.filename2, std::vector<std::size_t>{options.column2})
           .front();
+
+  vec2 = math::statistics::bin_data(vec2, options.bin_size);
 
   auto test_result = math::statistics::Kolmogorov_Smirnov_Test(vec1, vec2);
 
@@ -62,7 +66,9 @@ po::variables_map init_program_options(int argc, char *argv[])
     ("col1", po::value<std::size_t>()->default_value(0),
      "column to read in file1")
     ("col2", po::value<std::size_t>()->default_value(0),
-     "column to read in file2");
+     "column to read in file2")
+    ("bin,b", po::value<std::size_t>()->default_value(1),
+     "bin size");
 
   // clang-format on
 
@@ -103,6 +109,7 @@ Software_Options parse_program_options(int argc, char *argv[])
   options.column1 = var_map["col1"].as<std::size_t>();
   options.filename2 = var_map["file2"].as<std::string>();
   options.column2 = var_map["col2"].as<std::size_t>();
+  options.bin_size = var_map["bin"].as<std::size_t>();
 
   return options;
 }
