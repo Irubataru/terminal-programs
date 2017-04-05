@@ -1,7 +1,7 @@
 
 /*
  * Created: 27-01-2017
- * Modified: Thu 23 Mar 2017 11:48:33 GMT
+ * Modified: Wed 05 Apr 2017 12:33:50 BST
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
@@ -26,6 +26,8 @@ int main(int argc, char *argv[])
 
   auto table =
       reader.Read(options.filename, options.skip_lines, options.read_every);
+
+  bin_table(table, options.bin_size);
 
   switch (options.io_format) {
   case Io_Format::Human_Readable:
@@ -59,7 +61,8 @@ po::variables_map init_program_options(int argc, char *argv[])
      "list of comment symbols [default=\"#\"]")
     ("human,h", "human readable output")
     ("col", po::value<std::size_t>()->multitoken(),
-     "which columns to parse, will parse all of this option is unspecified");
+     "which columns to parse, will parse all of this option is unspecified")
+    ("bin,b", po::value<std::size_t>()->default_value(1), "bin size");
 
   // clang-format on
 
@@ -92,6 +95,7 @@ Table_Mean_Options parse_program_options(int argc, char *argv[])
   stat_table_options.filename = var_map["input-file"].as<std::string>();
   stat_table_options.skip_lines = var_map["skip"].as<std::size_t>();
   stat_table_options.read_every = var_map["delta"].as<std::size_t>();
+  stat_table_options.bin_size = var_map["bin"].as<std::size_t>();
 
   auto comments_str = var_map["comments"].as<std::string>();
   stat_table_options.comments =
@@ -122,7 +126,13 @@ void print_table_readable(const Container &table)
 {
   for (const auto &col : table)
     std::cout << math::statistics::mean(col.begin(), col.end()) << " "
-              << math::statistics::standard_deviation(col.begin(), col.end()) /
-                     std::sqrt(col.size())
+              << math::statistics::standard_deviation(col.begin(), col.end())
               << " ";
+}
+
+template <typename Container>
+void bin_table(Container &table, std::size_t bin_size)
+{
+  for (auto &col : table)
+    col = math::statistics::bin_data(col, bin_size);
 }

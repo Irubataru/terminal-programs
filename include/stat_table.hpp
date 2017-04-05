@@ -1,7 +1,7 @@
 
 /*
  * Created: 06-02-2017
- * Modified: Thu 23 Mar 2017 14:10:11 GMT
+ * Modified: Wed 05 Apr 2017 12:32:54 BST
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
@@ -28,6 +28,7 @@ struct Table_Mean_Options
   std::size_t skip_lines;
   std::size_t read_every;
   std::vector<char> comments;
+  std::size_t bin_size;
   Io_Format io_format;
 };
 
@@ -37,6 +38,9 @@ class nothing_to_do_exception : public std::exception
 
 po::variables_map init_program_options(int argc, char *argv[]);
 Table_Mean_Options parse_program_options(int argc, char *argv[]);
+
+template <typename Container>
+void bin_table(Container &, std::size_t);
 
 template <typename Container>
 void print_human_readable(const Container &);
