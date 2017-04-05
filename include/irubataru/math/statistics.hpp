@@ -1,7 +1,7 @@
 
 /*
  * Created: 23-03-2017
- * Modified: Thu 23 Mar 2017 14:11:24 GMT
+ * Modified: Wed 05 Apr 2017 12:30:35 BST
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
@@ -9,5 +9,6 @@
 #define IRUBATARU_MATH_STATISTICS_HPP
 
 #include "statistics/distribution_properties.hpp"
+#include "statistics/set_operations.hpp"
 
 #endif /* IRUBATARU_MATH_STATISTICS_HPP */
