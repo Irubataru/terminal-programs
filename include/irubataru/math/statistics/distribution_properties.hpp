@@ -1,15 +1,16 @@
 
 /*
  * Created: 27-01-2017
- * Modified: Thu 23 Mar 2017 14:08:28 GMT
+ * Modified: Tue 25 Apr 2017 11:06:57 BST
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
 #ifndef IRUBATARU_MATH_STAT_DISTRIBUTION_PROPERTIES_HPP
 #define IRUBATARU_MATH_STAT_DISTRIBUTION_PROPERTIES_HPP
 
-#include <algorithm>
+#include <cmath>
 #include <iterator>
+#include <numeric>
 
 namespace irubataru {
 namespace math {
@@ -78,9 +79,10 @@ jackknife_average(Iterator begin, Iterator end, Unary_Function unary)
   else if (size == 1u)
     return *begin;
 
-  auto total = std::accumulate(
-      begin, end, T{0.},
-      [unary](const auto &init, auto val) { return init + unary(val); });
+  auto total =
+      std::accumulate(begin, end, T{0.}, [unary](const auto &init, auto val) {
+        return init + unary(val);
+      });
 
   auto jack_mean = std::accumulate(begin, end, T{0.},
                                    [unary, total](const auto &init, auto val) {
@@ -110,9 +112,10 @@ jackknife_error(Iterator begin, Iterator end, Unary_Function unary)
   if (size < 2u)
     return T{0};
 
-  auto total = std::accumulate(
-      begin, end, T{0.},
-      [unary](const auto &init, auto val) { return init + unary(val); });
+  auto total =
+      std::accumulate(begin, end, T{0.}, [unary](const auto &init, auto val) {
+        return init + unary(val);
+      });
 
   auto jack_mean = std::accumulate(begin, end, T{0.},
                                    [unary, total](const auto &init, auto val) {
