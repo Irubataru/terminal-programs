@@ -1,7 +1,7 @@
 
 /*
  * Created: 27-01-2017
- * Modified: Wed 05 Apr 2017 12:33:50 BST
+ * Modified: Tue 09 Jan 2018 13:38:47 GMT
  * Author: Jonas R. Glesaaen (jonas@glesaaen.com)
  */
 
@@ -60,7 +60,7 @@ po::variables_map init_program_options(int argc, char *argv[])
     ("comments,c", po::value<std::string>()->default_value("#"),
      "list of comment symbols [default=\"#\"]")
     ("human,h", "human readable output")
-    ("col", po::value<std::size_t>()->multitoken(),
+    ("col", po::value<std::size_t>(),
      "which columns to parse, will parse all of this option is unspecified")
     ("bin,b", po::value<std::size_t>()->default_value(1), "bin size");
 
